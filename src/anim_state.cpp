@@ -1,6 +1,9 @@
 // Implements 
 #include "anim_state.h"
 
+// Std Headers
+#include <random>
+
 // Ext Headers
 // GLM
 #include "ext/glm/gtc/matrix_transform.hpp"
@@ -114,7 +117,7 @@ void Anim_State::build_bones(Joint *joint, glm::mat4 trs)
 	glm::vec4 v0 = trs * glm::vec4(0.f, 0.f, 0.f, 1.f);
 
 	// Joint (point)
-	create_joint_prim(joint, v0, glm::vec3(1.f, 0.f, 0.f));
+	create_joint_prim(joint, v0, glm::vec3(0.f, 0.f, 0.f));
 
 	// ==================== Joint End Site ====================
 	if (joint->is_end)
@@ -168,19 +171,14 @@ void Anim_State::render(const glm::mat4x4 &view, const glm::mat4x4 &persp)
 		// Scale Model Matrix (Post BVH transform) 
 		prim->scale(glm::vec3(0.05f));
 
-		// Line Colour 
-		/*
+		// Colour per bone ID
 		std::mt19937_64 rng;
 		std::uniform_real_distribution<float> dist(0.0, 1.0);
-		// Colour per bone ID
-		rng.seed(bone_id);
-		float r = dist(rng);
-		rng.seed(bone_id + 124);
-		float g = dist(rng);
-		rng.seed(bone_id + 321);
-		float b = dist(rng);
+		int32_t seed = prim->name[(prim->name.size() - 1)] + prim->name[(prim->name.size() - 2)];
+		rng.seed(seed);        float r = dist(rng);
+		rng.seed(seed + 124);  float g = dist(rng);
+		rng.seed(seed + 321);  float b = dist(rng);
 		prim->set_colour(glm::vec3(r, g, b));
-		*/		
 
 		// Set Camera Transform
 		prim->set_cameraTransform(view, persp);
