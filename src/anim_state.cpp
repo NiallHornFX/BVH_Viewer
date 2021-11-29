@@ -337,8 +337,11 @@ void Anim_State::write_bvh(const char *out_path)
 	for (std::size_t c = 0; c < (bvh->num_channel * bvh->num_frame); ++c)
 	{
 		stream << std::fixed << std::setprecision(6) << bvh->motion[c]; 
-		if (c != 0 && c % bvh->num_channel == 0) stream << "\n"; else stream << " ";
+		//if (c != 0 && c % bvh->num_channel == 0) stream << "\n"; else stream << " ";
+		if ((c+1) % bvh->num_channel == 0) stream << "\n"; else stream << " ";
 	}
+
+	stream << "\n";
 
 	// Debug
 	//std::cout << "Stream Output :\n\n" << stream.str() << "\n";
