@@ -207,7 +207,7 @@ void Viewer::render_prep()
 		0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f,
 	};
 	axis->set_data_mesh(data, 6);
-	axis->scale(glm::vec3(0.3f));
+	axis->scale(glm::vec3(0.5f));
 	axis->translate(glm::vec3(0.f, 0.01f, 0.f));
 	axis->set_shader("../../shaders/basic.vert", "../../shaders/colour.frag");
 	axis->mode = Render_Mode::RENDER_LINES;

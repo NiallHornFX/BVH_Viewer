@@ -33,8 +33,8 @@ public:
 	void dec_frame();
 
 	// Create Render Prims
-	void create_joint_prim(Joint *joint, const glm::vec4 &pos);
-	void create_bone_prim(Joint *joint, const glm::vec4 &start, const glm::vec4 &end);
+	void create_joint_prim(Joint *joint, const glm::vec4 &pos, const glm::vec3 &colour);
+	void create_bone_prim(Joint *joint, const glm::vec4 &start, const glm::vec4 &end, const glm::vec3 &colour);
 
 	// Debug
 	void debug() const;

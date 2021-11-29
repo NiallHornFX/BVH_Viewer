@@ -111,22 +111,20 @@ void Anim_State::build_bones(Joint *joint, glm::mat4 trs)
 	// Transformations Applied to vertices using current concatenated matrix.
 
 	// ==================== Viz Joints as Points ====================
-	// Viz Joints as Points 
 	glm::vec4 v0 = trs * glm::vec4(0.f, 0.f, 0.f, 1.f);
-	create_joint_prim(joint, v0);
 
-	/*
-	// Joint point (as line)
-	// ==================== End Point ====================
+	// Joint (point)
+	create_joint_prim(joint, v0, glm::vec3(1.f, 0.f, 0.f));
+
+	// ==================== Joint End Site ====================
 	if (joint->is_end)
 	{
 		glm::vec4 v1 = trs * glm::vec4(joint->end, 1.f);
-		// Joint point (as line)
-		//skel.add_bone(glm::vec3(v1), glm::vec3(v1), glm::mat4(1.f));
-		// Bone Line 
-		skel.add_bone(glm::vec3(v0), glm::vec3(v1), glm::mat4(1.f));
+		// End Site Joint (point)
+		create_joint_prim(joint, v1, glm::vec3(1.f, 0.f, 0.f));
+		// End Site Bone (line)
+		create_bone_prim(joint, v0, v1, glm::vec3(1.f, 0.f, 0.f));
 	}
-	*/
 
 	// ==================== Children ====================
 	// Pass each recurrsive call its own copy of the current (parent) transformations to then apply to children.
@@ -136,12 +134,12 @@ void Anim_State::build_bones(Joint *joint, glm::mat4 trs)
 		Joint *child = joint->children[c];
 		glm::vec4 v2 = trs * glm::vec4(child->offset, 1.f);
 
-		create_bone_prim(joint, v0, v2);
+		// Bone (line)
+		create_bone_prim(joint, v0, v2, glm::vec3(0.f, 0.f, 1.f));
 		
 		// =========== Recurse for all joint children ===========
 		build_bones(joint->children[c], trs);
 	}
-
 }
 
 void Anim_State::tick()
@@ -156,8 +154,11 @@ void Anim_State::render(const glm::mat4x4 &view, const glm::mat4x4 &persp)
 	{
 		// Scale Model Matrix (Post BVH transform) 
 		prim->scale(glm::vec3(0.05f));
+
 		// Set Camera Transform
 		prim->set_cameraTransform(view, persp);
+
+		// Render
 		glPointSize(10.f);
 		prim->render();
 	}
@@ -178,22 +179,21 @@ void Anim_State::render(const glm::mat4x4 &view, const glm::mat4x4 &persp)
 		float g = dist(rng);
 		rng.seed(bone_id + 321);
 		float b = dist(rng);
-		*/
-		float r = 0.f, g = 0.f, b = 1.f; 
-
-		// Set prim colour
 		prim->set_colour(glm::vec3(r, g, b));
+		*/		
+
 		// Set Camera Transform
 		prim->set_cameraTransform(view, persp);
+
 		// Render
 		glLineWidth(5.f);
 		prim->render();
 	}
 }
 
-// Set Animation Frame Member Functions
-// Inc and Dec loop. 
+// =============== Set Animation Frame Member Functions ===============
 
+// Increment and Decrement Animation Frame
 // Need to make sure inc/dec is only done for interval of current glfw dt. 
 
 void Anim_State::inc_frame()
@@ -212,10 +212,10 @@ void Anim_State::set_frame(std::size_t Frame)
 }
 
 
-// ======== Create Render Prims Member Functions =========
+// =============== Create Render Prims Member Functions ===============
 
 // Joint as single point
-void Anim_State::create_joint_prim(Joint *joint, const glm::vec4 &pos)
+void Anim_State::create_joint_prim(Joint *joint, const glm::vec4 &pos, const glm::vec3 &colour)
 {
 	std::string name = "joint_" + joint->name;
 	Primitive *j_prim = new Primitive(name.c_str());
@@ -229,24 +229,35 @@ void Anim_State::create_joint_prim(Joint *joint, const glm::vec4 &pos)
 	j_prim->set_shader("../../shaders/basic.vert", "../../shaders/colour.frag");
 
 	// Init Prim Attribs
+	j_prim->set_colour(colour);
 	j_prim->mode = Render_Mode::RENDER_POINTS;
 
 	// Append to Joint Prims
 	p_joints.push_back(j_prim);
 }
 
-void Anim_State::create_bone_prim(Joint *joint, const glm::vec4 &start, const glm::vec4 &end)
+void Anim_State::create_bone_prim(Joint *joint, const glm::vec4 &start, const glm::vec4 &end, const glm::vec3 &colour)
 {
 	std::string name = "Bone_" + std::to_string(p_bones.size() + 1);
-	Primitive *line = new Primitive(name.c_str());
+	Primitive *b_prim = new Primitive(name.c_str());
+
+	// Mesh Data
 	std::vector<vert> line_data; line_data.resize(2);
 	line_data[0].pos = glm::vec3(start), line_data[1].pos = glm::vec3(end);
-	line->set_data_mesh(line_data);
-	line->set_shader("../../shaders/basic.vert", "../../shaders/colour.frag");
-	line->mode = Render_Mode::RENDER_LINES;
-	p_bones.push_back(line);
+	b_prim->set_data_mesh(line_data);
+
+	// Prim Shader
+	b_prim->set_shader("../../shaders/basic.vert", "../../shaders/colour.frag");
+
+	// Init Prim Attribs
+	b_prim->set_colour(colour);
+	b_prim->mode = Render_Mode::RENDER_LINES;
+
+	// Append to Bone Prims
+	p_bones.push_back(b_prim);
 }
 
+// =============== Debug Member Functions ===============
 
 void Anim_State::debug() const
 {
