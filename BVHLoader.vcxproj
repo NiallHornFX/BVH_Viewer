@@ -57,7 +57,6 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\incl</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -74,7 +73,6 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\incl</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -86,7 +84,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\anim_state.cpp" />
-    <ClCompile Include="src\bone.cpp" />
     <ClCompile Include="src\bvhdata.cpp" />
     <ClCompile Include="src\camera.cpp" />
     <ClCompile Include="src\ext.cpp" />
@@ -95,13 +92,11 @@
     <ClCompile Include="src\mesh.cpp" />
     <ClCompile Include="src\primitive.cpp" />
     <ClCompile Include="src\shader.cpp" />
-    <ClCompile Include="src\skeleton.cpp" />
     <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="src\viewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="incl\anim_state.h" />
-    <ClInclude Include="incl\bone.h" />
     <ClInclude Include="incl\bvhdata.h" />
     <ClInclude Include="incl\camera.h" />
     <ClInclude Include="incl\gnomon.h" />
@@ -109,7 +104,6 @@
     <ClInclude Include="incl\mesh.h" />
     <ClInclude Include="incl\primitive.h" />
     <ClInclude Include="incl\shader.h" />
-    <ClInclude Include="incl\skeleton.h" />
     <ClInclude Include="incl\texture.h" />
     <ClInclude Include="incl\viewer.h" />
   </ItemGroup>

@@ -9,6 +9,7 @@
 #include "primitive.h"
 #include "ground.h"
 #include "mesh.h"
+
 #include "anim_state.h"
 
 // Ext Headers
@@ -63,7 +64,6 @@ public:
 	// Debug
 	void test_prim(); 
 	void test_mesh();
-	void test_bone();
 
 private:
 	void get_GLError();
@@ -91,9 +91,6 @@ private:
 	Ground *ground;
 	Primitive *axis;
 
-	// Debugging
-	Bone *bone_test;
-	Skeleton *skel;
 
 	// Viewer Intrinsics
 	std::size_t tick_c; 

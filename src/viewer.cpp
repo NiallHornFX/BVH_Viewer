@@ -1,9 +1,6 @@
 // Implements
 #include "viewer.h"
 
-// Project Headers
-//
-
 // Ext Headers
 // GLEW
 #include "ext/GLEW/glew.h" 
@@ -40,7 +37,7 @@ Viewer::Viewer(std::size_t W, std::size_t H, const char *Title)
 	last_yawoffs = 0.f;
 	last_pitchoffs = 0.f;
 	last_zoom = 0.f;
-	draw_grid = false;
+	draw_grid = true;
 	draw_axis = true;
 
 	// ==== OpenGL Setup ==== 
@@ -196,7 +193,7 @@ void Viewer::render_prep()
 	// Ground Plane
 	ground = new Ground;
 	ground->set_size(4.f);
-	ground->set_tile(4.f);
+	ground->set_tile(2.f);
 
 	// Gnomon to put into class.
 	axis = new Primitive("axis");
@@ -253,27 +250,14 @@ void Viewer::render()
 
 	// ==================== Render Bones ====================
 	// Tick Anim
-	anim.inc_frame();
-	anim.test();
-	//anim.debug();
+	// Play Forward
+	anim.anim_loop = true;
+	anim.inc_frame(); 
+	anim.tick();
 
-	//anim.test();
+	// Render
+	anim.render(camera.get_ViewMatrix(), camera.get_PerspMatrix());
 
-	//anim.tick();
-
-	// Testing Only (Build per tick).
-	//anim.skel.render_mesh = true;
-	//anim.anim_loop = false;
-	//anim.set_frame(0);
-	//anim.build_per_tick(); 
-
-
-
-
-
-
-	// Render Skeleton
-	anim.skel.render(camera.get_ViewMatrix(), camera.get_PerspMatrix());
 
 	// ==================== Render Debug ====================
 	// Test Render Bones
@@ -382,29 +366,7 @@ void Viewer::test_mesh()
 	prims.push_back(pig);
 }
 
-void Viewer::test_bone()
-{
-	//bone_test = new Bone(glm::vec3(0.f), glm::vec3(0.f, 1.f, 0.f), glm::mat4(1), 0);
 
-	skel = new Skeleton(glm::mat4(1.f));
-
-	glm::vec3 last_pos(0.f);
-	for (std::size_t i = 0; i < 10; ++i)
-	{
-		float norm = float(i) / 9.f;
-
-		// Define test transform 
-		glm::vec3 ax = (i % 2 == 0) ? glm::vec3(0.f, 1.f, 0.f) : glm::vec3(1.f, 0.f, 0.f);
-		float angle = glm::sin(norm * 5);
-
-		glm::mat4 trs(1.f);
-		trs = glm::rotate(trs, angle, ax);
-		glm::vec3 end = last_pos + glm::vec3(0.f, 0.5f, 0.f);
-		skel->add_bone(last_pos, end, trs);
-		last_pos = end;
-	}
-
-}
 
 // =========================================== GLFW State + Callbacks ===========================================
 
