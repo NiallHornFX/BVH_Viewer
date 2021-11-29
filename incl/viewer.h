@@ -46,9 +46,6 @@ public:
 	// GUI
 	//
 
-	
-
-
 	// Application 
 	void exec(); // Exec Viewer Application 
 	void tick(); // Single Tick

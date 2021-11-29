@@ -34,6 +34,7 @@ public:
 
 	// Create Render Prims
 	void create_joint_prim(Joint *joint, const glm::vec4 &pos, const glm::vec3 &colour);
+	void create_joint_sphere_prim(Joint *joint, const glm::vec4 &pos, const glm::vec3 &colour);
 	void create_bone_prim(Joint *joint, const glm::vec4 &start, const glm::vec4 &end, const glm::vec3 &colour);
 
 	// Debug
@@ -46,6 +47,7 @@ public:
 
 	std::vector<Primitive*>  p_bones;   // Bone Line
 	std::vector<Primitive*>  p_joints;  // Joint Points
+	std::vector<Primitive*>  p_joints_spheres;  
 
 	// Intrisnic Anim Data 
 	std::size_t anim_frame, max_frame;

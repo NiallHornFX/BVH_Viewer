@@ -4,11 +4,16 @@
 // Std Headers
 #include <random>
 
+// Project Headers
+#include "mesh.h"
+
 // Ext Headers
 // GLM
 #include "ext/glm/gtc/matrix_transform.hpp"
 #include "ext/glm/gtc/type_ptr.hpp"
 
+
+// =================== Anim_State Implementation ===================
 
 // Basic Ctor, state is set on demmand as needed. 
 Anim_State::Anim_State()
@@ -119,6 +124,9 @@ void Anim_State::build_bones(Joint *joint, glm::mat4 trs)
 	// Joint (point)
 	create_joint_prim(joint, v0, glm::vec3(0.f, 0.f, 0.f));
 
+	// Joint (Sphere)
+	create_joint_sphere_prim(joint, v0, glm::vec3(0.f));
+
 	// ==================== Joint End Site ====================
 	if (joint->is_end)
 	{
@@ -165,6 +173,19 @@ void Anim_State::render(const glm::mat4x4 &view, const glm::mat4x4 &persp)
 
 		// Render
 		glPointSize(10.f);
+		prim->render();
+	}
+	// ============== Render Joints (as Mesh Sphere) ==============
+	for (Primitive *prim : p_joints_spheres)
+	{
+		// Scale Model Matrix (Post BVH transform) 
+		prim->scale(glm::vec3(0.05f));
+		prim->model[3] = prim->model[3] * glm::vec4(0.05f, 0.05f, 0.05f, 1.f); // Also Scale Translation (Post Scale)
+
+		// Set Camera Transform
+		prim->set_cameraTransform(view, persp);
+
+		// Render
 		prim->render();
 	}
 	// ============== Render Bones (as lines) ==============
@@ -234,6 +255,27 @@ void Anim_State::create_joint_prim(Joint *joint, const glm::vec4 &pos, const glm
 
 	// Append to Joint Prims
 	p_joints.push_back(j_prim);
+}
+
+// Issues in Release Mode. 
+void Anim_State::create_joint_sphere_prim(Joint *joint, const glm::vec4 &pos, const glm::vec3 &colour)
+{
+	std::string name = "joint_" + joint->name;
+	Mesh *j_spher = new Mesh(name.c_str(), "../../assets/mesh/sphere.obj");
+
+	j_spher->load_obj(false);
+	j_spher->set_shader("../../shaders/basic.vert", "../../shaders/colour.frag");
+	j_spher->set_colour(glm::vec3(1.f, 0.f, 0.f));
+
+	// Transform Operations (mesh model mat)
+	// Scale Sphere By Radius (LS)
+	//j_spher->scale(glm::vec3(2.f, 2.f, 2.f));
+
+	// Translate to Joint Pos (WS)
+	j_spher->translate(pos);
+
+	// Append to Joint Prims
+	p_joints_spheres.push_back(j_spher);
 }
 
 void Anim_State::create_bone_prim(Joint *joint, const glm::vec4 &start, const glm::vec4 &end, const glm::vec3 &colour)

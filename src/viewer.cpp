@@ -339,7 +339,7 @@ void Viewer::query_anim_prev()
 {
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 	{
-		anim.anim_frame -= 1;
+		anim.dec_frame();
 		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	}
 }
@@ -348,7 +348,7 @@ void Viewer::query_anim_next()
 {
 	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 	{
-		anim.anim_frame += 1;
+		anim.inc_frame();
 		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	}
 }
