@@ -49,16 +49,12 @@ Viewer::Viewer(std::size_t W, std::size_t H, const char *Title)
 	// ==== Anim State ====
 	// Init with some BVH File (can be changed later via GUI)
 
-	// Static
-	//anim.set_bvhFile("../../assets/bvh/testA.bvh");
-	//anim.set_bvhFile("../../assets/bvh/rest.bvh");
-
 	// Walk
-	anim.set_bvhFile("../../assets/bvh/02_01.bvh");
+	//anim.set_bvhFile("../../assets/bvh/02_01.bvh");
 
-	// Custom Debug
-	//anim.set_bvhFile("../../assets/bvh/6test_noroot.bvh");
-	//anim.set_bvhFile("../../assets/bvh/two.bvh");
+	// Dance
+	anim.set_bvhFile("../../assets/bvh/05_06.bvh");
+
 
 	// ==== Create Camera ====
 	//camera = Camera(glm::vec3(0.f, 0.25f, 1.f), 1.f, 80.f, width / height, false); // Fixed
@@ -200,7 +196,7 @@ void Viewer::render_prep()
 	ground->set_size(4.f);
 	ground->set_tile(2.f);
 
-	// Gnomon to put into class.
+	// Axis
 	axis = new Primitive("axis");
 	float data[66] =
 	{

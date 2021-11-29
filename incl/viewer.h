@@ -45,7 +45,9 @@ public:
 
 	// GUI
 	//
-	void query_drawState();
+
+	
+
 
 	// Application 
 	void exec(); // Exec Viewer Application 
@@ -56,6 +58,7 @@ public:
 	void update_camera();
 
 	// State Query
+	void query_drawState();
 	bool esc_pressed();
 	void get_dt();
 
