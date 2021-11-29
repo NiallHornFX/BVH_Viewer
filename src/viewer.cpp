@@ -79,11 +79,15 @@ void Viewer::exec()
 	//test_bone();
 
 	// ==== Application Loop ====
-	while (!glfwWindowShouldClose(window) && !esc_pressed())
+	bool esc = false; 
+	while (!glfwWindowShouldClose(window) && !esc)
 	{
 		// Tick viewer application
 		tick();
-	}
+
+		// Query Esc key
+		esc = esc_pressed();
+	} 
 }
 
 
