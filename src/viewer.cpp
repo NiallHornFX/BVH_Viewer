@@ -49,8 +49,11 @@ Viewer::Viewer(std::size_t W, std::size_t H, const char *Title)
 	// ==== Anim State ====
 	// Init with some BVH File (can be changed later via GUI)
 
+	// Test
+	anim.set_bvhFile("../../assets/bvh/arm.bvh");
+
 	// Walk
-	anim.set_bvhFile("../../assets/bvh/02_01.bvh");
+	//anim.set_bvhFile("../../assets/bvh/02_01.bvh");
 
 	// Dance
 	//anim.set_bvhFile("../../assets/bvh/05_06.bvh");
@@ -78,7 +81,11 @@ void Viewer::exec()
 	//test_mesh();
 	//test_bone();
 
+	// BVH Write Test
+	anim.write_bvh("output.bvh");
+
 	// ==== Application Loop ====
+	/*
 	bool esc = false; 
 	while (!glfwWindowShouldClose(window) && !esc)
 	{
@@ -87,7 +94,7 @@ void Viewer::exec()
 
 		// Query Esc key
 		esc = esc_pressed();
-	} 
+	} */
 }
 
 

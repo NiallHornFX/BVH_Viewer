@@ -3,6 +3,8 @@
 
 // Std Headers
 #include <random>
+#include <iomanip>
+#include <fstream>
 
 // Project Headers
 #include "mesh.h"
@@ -309,3 +311,104 @@ void Anim_State::debug() const
 	std::cout << "Anim::" << bvh->filename << " ::Frame = " << anim_frame << "\n";
 }
 
+
+// =============== Write out BVH File Member Functions ===============
+
+void Anim_State::write_bvh(const char *out_path)
+{
+	// ============== Check output file is good ==============
+	std::ofstream out(out_path);
+	if (!out.is_open())
+	{
+		std::cerr << "ERROR::Writing BVH File::" << out_path << "::Path is not valid" << std::endl;
+		std::terminate();
+	}
+
+	// ============== Init Write Stream ==============
+	std::stringstream stream; 
+	stream << "HIERARCHY\n";
+
+	// ============== Get Joint Hierachy ==============
+	write_bvh_traverse(bvh->joints[0], stream);
+
+	// ============== Get Motion Data ==============
+	stream << "MOTION\nFrames: " << bvh->num_frame << "\nFrame Time: " << bvh->interval << "\n";
+
+	for (std::size_t c = 0; c < (bvh->num_channel * bvh->num_frame); ++c)
+	{
+		stream << std::fixed << std::setprecision(6) << bvh->motion[c]; 
+		if (c != 0 && c % bvh->num_channel == 0) stream << "\n"; else stream << " ";
+	}
+
+	// Debug
+	//std::cout << "Stream Output :\n\n" << stream.str() << "\n";
+	// ============== Write to file ==============
+	out << stream.str();
+	out.close(); 
+}
+
+void Anim_State::write_bvh_traverse(Joint *joint, std::stringstream &stream)
+{
+	// Get tab indent for joint based on index in tree. 
+	std::string tab; for (std::size_t i = 0; i < joint->idx; ++i) tab += "\t";
+	
+	if (joint->is_root) // Root joint, translation from channels. 
+	{
+		glm::vec4 root_offs(0., 0., 0., 1.);
+
+		for (const Channel *c : joint->channels)
+		{
+			switch (c->type)
+			{
+				// Translation
+				case ChannelEnum::X_POSITION:
+				{
+					float x_p = bvh->motion[anim_frame * bvh->num_channel + c->index];
+					root_offs.x = x_p;
+					break;
+				}
+				case ChannelEnum::Y_POSITION:
+				{
+					float y_p = bvh->motion[anim_frame * bvh->num_channel + c->index];
+					root_offs.y = y_p;
+					break;
+				}
+				case ChannelEnum::Z_POSITION:
+				{
+					float z_p = bvh->motion[anim_frame * bvh->num_channel + c->index];
+					root_offs.z = z_p;
+					break;
+				}
+			}
+		}
+
+		// We know root has 6 DOFs so we can hardcode these. 
+		stream << "ROOT " << joint->name << "\n{\n\t"
+			<< "OFFSET " << std::fixed << std::setprecision(6)
+			<< root_offs.x << " " << root_offs.y << " " << root_offs.z << "\n\t"
+			<< "CHANNELS 6 Xposition Yposition Zposition Zrotation Yrotation Xrotation\n";
+	}
+	else // Standard Joint
+	{
+		stream << tab.c_str() << "JOINT " << joint->name << "\n" << tab.c_str() << "{\n" << tab.c_str() << "\t" 
+			<< "OFFSET " << std::fixed << std::setprecision(6)
+			<< joint->offset.x << " " << joint->offset.y << " " << joint->offset.z << "\n" << tab.c_str() << "\t"
+			<< "CHANNELS 3 Zrotation Yrotation Xrotation\n";
+
+		// End Site
+		if (joint->is_end)
+		{
+			stream << tab.c_str() << "\tEnd Site\n" << tab.c_str() << "\t{\n" << tab.c_str() << "\t\t"
+				<< "OFFSET " << joint->end.x << " " << joint->end.y << " " << joint->end.z 
+				<< "\n" << tab.c_str() << "\t}\n";
+		}
+	}
+
+	for (Joint *child : joint->children)
+	{
+		write_bvh_traverse(child, stream);
+	}
+
+	stream << tab.c_str() << "}\n";
+
+}

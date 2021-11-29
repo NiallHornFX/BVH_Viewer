@@ -7,6 +7,8 @@
 
 // Std Headers
 #include <vector>
+#include <string>
+#include <sstream>
 
 // Info :  Class where animation processing is based (BVH, FK, IK). Exists within app as Tick Stage. 
 
@@ -39,6 +41,10 @@ public:
 
 	// Debug
 	void debug() const;
+
+	// Write Out BVH File out anim data.
+	void write_bvh(const char *out_path);
+	void write_bvh_traverse(Joint *joint, std::stringstream &stream);
 
 public:
 

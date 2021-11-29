@@ -361,3 +361,4 @@ void BVH_Data::Debug(bool to_file)
 	}
 	std::cout << out.rdbuf();
 }
+
