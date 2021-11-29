@@ -12,6 +12,7 @@
 #include "ext/glm/gtc/matrix_transform.hpp"
 #include "ext/glm/gtc/type_ptr.hpp"
 
+#define DRAW_END_EFFECTOR 0 
 
 // =================== Anim_State Implementation ===================
 
@@ -42,6 +43,7 @@ void Anim_State::build_skel()
 	// Reset Primtive Arrays
 	p_bones.clear();
 	p_joints.clear();
+	p_joints_spheres.clear();
 
 	// Build
 	Joint *root = bvh->joints[0];
@@ -122,11 +124,12 @@ void Anim_State::build_bones(Joint *joint, glm::mat4 trs)
 	glm::vec4 v0 = trs * glm::vec4(0.f, 0.f, 0.f, 1.f);
 
 	// Joint (point)
-	create_joint_prim(joint, v0, glm::vec3(0.f, 0.f, 0.f));
+//	create_joint_prim(joint, v0, glm::vec3(0.f, 0.f, 0.f));
 
 	// Joint (Sphere)
 	create_joint_sphere_prim(joint, v0, glm::vec3(0.f));
 
+	#if DRAW_END_EFFECTOR != 0 
 	// ==================== Joint End Site ====================
 	if (joint->is_end)
 	{
@@ -136,7 +139,7 @@ void Anim_State::build_bones(Joint *joint, glm::mat4 trs)
 		// End Site Bone (line)
 		create_bone_prim(joint, v0, v1, glm::vec3(1.f, 0.f, 0.f));
 	}
-
+	#endif
 	// ==================== Children ====================
 	// Pass each recurrsive call its own copy of the current (parent) transformations to then apply to children.
 	for (std::size_t c = 0; c < joint->children.size(); ++c) 

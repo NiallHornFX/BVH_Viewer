@@ -50,10 +50,10 @@ Viewer::Viewer(std::size_t W, std::size_t H, const char *Title)
 	// Init with some BVH File (can be changed later via GUI)
 
 	// Walk
-	//anim.set_bvhFile("../../assets/bvh/02_01.bvh");
+	anim.set_bvhFile("../../assets/bvh/02_01.bvh");
 
 	// Dance
-	anim.set_bvhFile("../../assets/bvh/05_06.bvh");
+	//anim.set_bvhFile("../../assets/bvh/05_06.bvh");
 
 
 	// ==== Create Camera ====
