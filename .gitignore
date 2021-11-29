@@ -1,0 +1,11 @@
+# Dirs
+build/intermediate
+.vs
+
+# File types
+*.vc.db
+*.vc
+*.obj
+*.pdb
+*.idb
+

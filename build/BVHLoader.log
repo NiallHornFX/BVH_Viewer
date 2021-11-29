@@ -1,0 +1,20 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(377,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  anim_state.cpp
+d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(29): warning C4244: '=': conversion from 'real' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(117): warning C4091: '': ignored on left of 'glm::mat<4,4,double,0>' when no variable is declared
+d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(138): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(144): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(150): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(157): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(163): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(169): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(197): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(203): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(209): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(256): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(262): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(268): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(291): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(297): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(303): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
+  BVHLoader.vcxproj -> D:\DEV\Projects\Uni_Local\BVH_Loader\\build\bin\BVHLoader.exe
