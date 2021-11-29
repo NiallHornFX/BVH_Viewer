@@ -114,7 +114,6 @@ void Anim_State::build_bones(Joint *joint, glm::mat4 trs)
 	// Viz Joints as Points 
 	glm::vec4 v0 = trs * glm::vec4(0.f, 0.f, 0.f, 1.f);
 	create_joint_prim(joint, v0);
-	//skel.add_bone(glm::vec3(v0), glm::vec3(v0), glm::mat4(1.f));
 
 	/*
 	// Joint point (as line)
@@ -134,10 +133,10 @@ void Anim_State::build_bones(Joint *joint, glm::mat4 trs)
 	for (std::size_t c = 0; c < joint->children.size(); ++c) 
 	{
 		// =========== Add Bone for each child offset, rel to parent transform ===========
-		//Joint *child = joint->children[c];
-		//glm::vec4 v2 = trs * glm::vec4(child->offset, 1.f);
-		// Bone Line
-		//skel.add_bone(glm::vec3(v0), glm::vec3(v2), glm::mat4(1.f));
+		Joint *child = joint->children[c];
+		glm::vec4 v2 = trs * glm::vec4(child->offset, 1.f);
+
+		create_bone_prim(joint, v0, v2);
 		
 		// =========== Recurse for all joint children ===========
 		build_bones(joint->children[c], trs);
@@ -152,12 +151,42 @@ void Anim_State::tick()
 
 void Anim_State::render(const glm::mat4x4 &view, const glm::mat4x4 &persp)
 {
-	// ============== Render Joints ==============
+	// ============== Render Joints (as points) ==============
 	for (Primitive *prim : p_joints)
 	{
+		// Scale Model Matrix (Post BVH transform) 
+		prim->scale(glm::vec3(0.05f));
 		// Set Camera Transform
 		prim->set_cameraTransform(view, persp);
 		glPointSize(10.f);
+		prim->render();
+	}
+	// ============== Render Bones (as lines) ==============
+	for (Primitive *prim : p_bones)
+	{
+		// Scale Model Matrix (Post BVH transform) 
+		prim->scale(glm::vec3(0.05f));
+
+		// Line Colour 
+		/*
+		std::mt19937_64 rng;
+		std::uniform_real_distribution<float> dist(0.0, 1.0);
+		// Colour per bone ID
+		rng.seed(bone_id);
+		float r = dist(rng);
+		rng.seed(bone_id + 124);
+		float g = dist(rng);
+		rng.seed(bone_id + 321);
+		float b = dist(rng);
+		*/
+		float r = 0.f, g = 0.f, b = 1.f; 
+
+		// Set prim colour
+		prim->set_colour(glm::vec3(r, g, b));
+		// Set Camera Transform
+		prim->set_cameraTransform(view, persp);
+		// Render
+		glLineWidth(5.f);
 		prim->render();
 	}
 }
@@ -183,8 +212,10 @@ void Anim_State::set_frame(std::size_t Frame)
 }
 
 
+// ======== Create Render Prims Member Functions =========
 
-void Anim_State::create_joint_prim(Joint *joint, const glm::vec3 &pos)
+// Joint as single point
+void Anim_State::create_joint_prim(Joint *joint, const glm::vec4 &pos)
 {
 	std::string name = "joint_" + joint->name;
 	Primitive *j_prim = new Primitive(name.c_str());
@@ -198,14 +229,23 @@ void Anim_State::create_joint_prim(Joint *joint, const glm::vec3 &pos)
 	j_prim->set_shader("../../shaders/basic.vert", "../../shaders/colour.frag");
 
 	// Init Prim Attribs
-	j_prim->scale(glm::vec3(0.05f));
 	j_prim->mode = Render_Mode::RENDER_POINTS;
 
 	// Append to Joint Prims
 	p_joints.push_back(j_prim);
 }
 
-
+void Anim_State::create_bone_prim(Joint *joint, const glm::vec4 &start, const glm::vec4 &end)
+{
+	std::string name = "Bone_" + std::to_string(p_bones.size() + 1);
+	Primitive *line = new Primitive(name.c_str());
+	std::vector<vert> line_data; line_data.resize(2);
+	line_data[0].pos = glm::vec3(start), line_data[1].pos = glm::vec3(end);
+	line->set_data_mesh(line_data);
+	line->set_shader("../../shaders/basic.vert", "../../shaders/colour.frag");
+	line->mode = Render_Mode::RENDER_LINES;
+	p_bones.push_back(line);
+}
 
 
 void Anim_State::debug() const
