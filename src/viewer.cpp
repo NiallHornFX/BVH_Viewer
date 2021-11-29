@@ -94,20 +94,25 @@ void Viewer::exec()
 // Single tick of the viewer application, all runtime operations are called from here. 
 void Viewer::tick()
 {
-	// ======= App Operations =======
+	// ============= App Operations =============
 	get_dt();
-	query_drawState();
 	update_window();
 	update_camera();
 
-	// ======= Cool operations =======
-	// Get Skeleton Update
-	// IK 
+	// ============= Input Query =============
+	// Draw Query 
+	query_drawState();
 
-	// ======= Render =======
+	// Anim Input Query (Set anim state)
+	query_anim_pause();
+	query_anim_reset();
+	query_anim_prev();
+	query_anim_next();
+
+	// ============= Render =============
 	render();
 
-	// ======= Post Tick =======
+	// ============= Post Tick Operations =============
 	tick_c++;
 }
 
@@ -248,14 +253,11 @@ void Viewer::render()
 		}
 	}
 
-	// ==================== Render Bones ====================
+	// ==================== Render Anim ====================
 	// Tick Anim
-	// Play Forward
-	anim.anim_loop = true;
-	anim.inc_frame(); 
 	anim.tick();
 
-	// Render
+	// Render Anim
 	anim.render(camera.get_ViewMatrix(), camera.get_PerspMatrix());
 
 
@@ -317,6 +319,42 @@ void Viewer::get_dt()
 bool Viewer::esc_pressed()
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) return true;
+}
+
+void Viewer::query_anim_pause()
+{
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+	{
+		anim.anim_loop = !anim.anim_loop;
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	}
+}
+
+void Viewer::query_anim_reset()
+{
+	if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
+	{
+		anim.anim_frame = 0;
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	}
+}
+
+void Viewer::query_anim_prev()
+{
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+	{
+		anim.anim_frame -= 1;
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	}
+}
+
+void Viewer::query_anim_next()
+{
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	{
+		anim.anim_frame += 1;
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	}
 }
 
 // =========================================== DEBUG CODE ===========================================

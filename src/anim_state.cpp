@@ -147,6 +147,8 @@ void Anim_State::build_bones(Joint *joint, glm::mat4 trs)
 
 void Anim_State::tick()
 {
+	if (anim_loop) inc_frame();
+
 	build_skel();
 }
 

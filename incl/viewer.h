@@ -59,7 +59,11 @@ public:
 	bool esc_pressed();
 	void get_dt();
 
-	//void get_animData(); 
+	// Input Query (forward to anim state)
+	void query_anim_pause();
+	void query_anim_reset();
+	void query_anim_prev();
+	void query_anim_next();
 
 	// Debug
 	void test_prim(); 
@@ -90,7 +94,6 @@ private:
 	std::vector<Primitive*> prims;
 	Ground *ground;
 	Primitive *axis;
-
 
 	// Viewer Intrinsics
 	std::size_t tick_c; 
