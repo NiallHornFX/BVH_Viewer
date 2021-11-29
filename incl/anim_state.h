@@ -32,6 +32,9 @@ public:
 	void inc_frame();
 	void dec_frame();
 
+	// Create Render Prims
+	void create_joint_prim(Joint *joint, const glm::vec3 &pos);
+
 	// Debug
 	void debug() const;
 

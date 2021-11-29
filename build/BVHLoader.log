@@ -7,4 +7,20 @@ d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(69): warning C4244: 'ini
 d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(92): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
 d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(98): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
 d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(104): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
+  main.cpp
+  viewer.cpp
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(65): warning C4244: 'argument': conversion from 'size_t' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(132): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(149): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(313): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(334): warning C4305: 'initializing': truncation from 'double' to 'float'
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(379): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(380): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(381): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(383): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(384): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(385): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(393): warning C4244: 'initializing': conversion from 'size_t' to 'float', possible loss of data
+  Generating Code...
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(320): warning C4715: 'Viewer::esc_pressed': not all control paths return a value
   BVHLoader.vcxproj -> D:\DEV\Projects\Uni_Local\BVH_Loader\\build\bin\BVHLoader.exe

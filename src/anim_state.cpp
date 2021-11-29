@@ -113,20 +113,7 @@ void Anim_State::build_bones(Joint *joint, glm::mat4 trs)
 	// ==================== Viz Joints as Points ====================
 	// Viz Joints as Points 
 	glm::vec4 v0 = trs * glm::vec4(0.f, 0.f, 0.f, 1.f);
-
-	// Create Joint Primtivie (Point)
-	std::string name = "joint_" + joint->name;
-	Primitive *j_prim = new Primitive(name.c_str());
-	float data[11]; 
-	data[0] = v0.x, data[1] = v0.y, data[2] = v0.z,
-	data[3] = 0.f, data[4] = 0.f, data[5] = 0.f,
-	data[6] = 0.f, data[7] = 0.f, data[8] = 0.f,
-	data[9] = 0.f, data[10] = 0.f; 
-	j_prim->set_data_mesh(data, 1);
-	j_prim->scale(glm::vec3(0.05f));
-	j_prim->set_shader("../../shaders/basic.vert", "../../shaders/colour.frag");
-	j_prim->mode = Render_Mode::RENDER_POINTS;
-	p_joints.push_back(j_prim);
+	create_joint_prim(joint, v0);
 	//skel.add_bone(glm::vec3(v0), glm::vec3(v0), glm::mat4(1.f));
 
 	/*
@@ -195,7 +182,32 @@ void Anim_State::set_frame(std::size_t Frame)
 	anim_frame = Frame > max_frame ? max_frame : Frame;
 }
 
-// Will flesh out debug later. 
+
+
+void Anim_State::create_joint_prim(Joint *joint, const glm::vec3 &pos)
+{
+	std::string name = "joint_" + joint->name;
+	Primitive *j_prim = new Primitive(name.c_str());
+
+	// Mesh Data
+	float data[11] = { 0.f };
+	data[0] = pos.x, data[1] = pos.y, data[2] = pos.z,
+	j_prim->set_data_mesh(data, 1);
+
+	// Prim Shader
+	j_prim->set_shader("../../shaders/basic.vert", "../../shaders/colour.frag");
+
+	// Init Prim Attribs
+	j_prim->scale(glm::vec3(0.05f));
+	j_prim->mode = Render_Mode::RENDER_POINTS;
+
+	// Append to Joint Prims
+	p_joints.push_back(j_prim);
+}
+
+
+
+
 void Anim_State::debug() const
 {
 	std::cout << "Anim::" << bvh->filename << " ::Frame = " << anim_frame << "\n";
