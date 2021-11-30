@@ -262,7 +262,6 @@ void Anim_State::create_joint_prim(Joint *joint, const glm::vec4 &pos, const glm
 	p_joints.push_back(j_prim);
 }
 
-// Issues in Release Mode. 
 void Anim_State::create_joint_sphere_prim(Joint *joint, const glm::vec4 &pos, const glm::vec3 &colour)
 {
 	std::string name = "joint_" + joint->name;
@@ -413,5 +412,4 @@ void Anim_State::write_bvh_traverse(Joint *joint, std::stringstream &stream)
 	}
 
 	stream << tab.c_str() << "}\n";
-
 }

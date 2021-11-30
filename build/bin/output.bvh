@@ -1,7 +1,7 @@
 HIERARCHY
 ROOT Bone
 {
-	OFFSET 0.000000 0.000000 0.000000
+	OFFSET 4.329111 0.000000 0.000000
 	CHANNELS 6 Xposition Yposition Zposition Zrotation Yrotation Xrotation
 	JOINT Bone.002
 	{

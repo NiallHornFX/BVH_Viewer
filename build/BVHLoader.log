@@ -1,18 +1,19 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(377,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  anim_state.cpp
-d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(40): warning C4244: '=': conversion from 'real' to 'float', possible loss of data
-d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(69): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
-d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(75): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
-d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(81): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
-d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(104): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
-d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(110): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
-d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(116): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
-d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(369): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
-d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(375): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
-d:\dev\projects\uni_local\bvh_loader\src\anim_state.cpp(381): warning C4244: 'initializing': conversion from 'real' to 'float', possible loss of data
+  viewer.cpp
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(64): warning C4244: 'argument': conversion from 'size_t' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(142): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(159): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(308): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(393): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(394): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(395): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(397): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(398): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(399): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(407): warning C4244: 'initializing': conversion from 'size_t' to 'float', possible loss of data
   Generating code
-  3 of 950 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+  3 of 1122 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   BVHLoader.vcxproj -> D:\DEV\Projects\Uni_Local\BVH_Loader\\build\bin\BVHLoader.exe

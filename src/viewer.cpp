@@ -50,10 +50,10 @@ Viewer::Viewer(std::size_t W, std::size_t H, const char *Title)
 	// Init with some BVH File (can be changed later via GUI)
 
 	// Test
-	anim.set_bvhFile("../../assets/bvh/arm.bvh");
+	//anim.set_bvhFile("../../assets/bvh/arm.bvh");
 
 	// Walk
-	//anim.set_bvhFile("../../assets/bvh/02_01.bvh");
+	anim.set_bvhFile("../../assets/bvh/02_01.bvh");
 
 	// Dance
 	//anim.set_bvhFile("../../assets/bvh/05_06.bvh");
@@ -77,15 +77,12 @@ void Viewer::exec()
 	render_prep();
 
 	// Create Test Primtiive
-	//test_prim();
 	//test_mesh();
-	//test_bone();
 
 	// BVH Write Test
-	anim.write_bvh("output.bvh");
+	//anim.write_bvh("output.bvh");
 
 	// ==== Application Loop ====
-	/*
 	bool esc = false; 
 	while (!glfwWindowShouldClose(window) && !esc)
 	{
@@ -94,7 +91,7 @@ void Viewer::exec()
 
 		// Query Esc key
 		esc = esc_pressed();
-	} */
+	} 
 }
 
 
@@ -115,6 +112,7 @@ void Viewer::tick()
 	query_anim_reset();
 	query_anim_prev();
 	query_anim_next();
+	query_anim_write();
 
 	// ============= Render =============
 	render();
@@ -267,18 +265,6 @@ void Viewer::render()
 	// Render Anim
 	anim.render(camera.get_ViewMatrix(), camera.get_PerspMatrix());
 
-
-	// ==================== Render Debug ====================
-	// Test Render Bones
-	//bone_test->transform = glm::rotate(bone_test->transform, 0.01f, glm::vec3(0.f, 1.f, 0.f));
-	//bone_test->set_cameraTransform(camera.get_ViewMatrix(), camera.get_PerspMatrix());
-	//if (tick_c % 20 != 0) bone_test->render(false); else bone_test->render(true);
-
-	// Test Draw Skeleton
-	//get_GLError();
-	//skel->render_mesh = (glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS) ? true : false; 
-	//skel->render(camera.get_ViewMatrix(), camera.get_PerspMatrix());
-
 	// ====================  Swap and Poll ====================
 	get_GLError();
 	glfwSwapBuffers(window);
@@ -323,6 +309,8 @@ void Viewer::get_dt()
 	dt = cur_t - prev_t; 
 }
 
+// These will be replaced by GUI Calls later, for now use keyboard inputs.
+
 bool Viewer::esc_pressed()
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) return true;
@@ -364,46 +352,27 @@ void Viewer::query_anim_next()
 	}
 }
 
-// =========================================== DEBUG CODE ===========================================
-
-// Function to test OpenGL within Viewer App via Mesh Class. 
-void Viewer::test_prim()
+void Viewer::query_anim_write()
 {
-	Primitive *prim_t = new Primitive("test");
-	float test_verts[11 * 3] =
+	std::string path = "output.bvh";
+	if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
 	{
-		// Face 0
-		0.0, 0.0, 0.0,  0.0, 1.0, 1.0,	1.0, 0.0, 0.0,	0.1, 0.2,
-		1.0, 0.0, 0.0,  1.0, 0.0, 1.0,	0.0, 1.0, 0.0,	0.1, 0.2,
-		0.5, 1.0, 0.0,  1.0, 1.0, 0.0,	0.0, 0.0, 1.0,	0.1, 0.2
-	};
-	prim_t->set_data_mesh(test_verts, 3);
-	prim_t->set_shader("test.vert", "test.frag");
-	prim_t->scale(glm::vec3(0.2f));
-	prim_t->mode = Render_Mode::RENDER_MESH;
-	prims.push_back(prim_t);
+		std::cout << "INFO::BVH Export Initiated to::" << path << ".\n";
+		anim.write_bvh(path.c_str());
+		std::cout << "INFO::BVH Export Scuessful !\n";
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	}
 }
+
+// =========================================== DEBUG CODE ===========================================
 
 // Obj Loading Test
 void Viewer::test_mesh()
 {
-	/*
-	// Textured Mesh Test 
-	Mesh *mesh_t = new Mesh("Grid", "../../assets/mesh/grid.obj");
-	mesh_t->load_obj(true);
-	mesh_t->set_shader("test_tex.vert", "test_tex.frag");
-	//mesh_t->set_shader("../../shaders/ground.vert", "../../shaders/ground.frag");
-	mesh_t->load_texture("grid.png", 0);
-	mesh_t->tex->set_params(Texture::filter_type::LINEAR);
-	mesh_t->set_colour(glm::vec3(1.f, 0.f, 0.f));
-	mesh_t->mode = Render_Mode::RENDER_MESH;
-	prims.push_back(mesh_t); 
-	*/
-
 	// Pig
-	Mesh *pig = new Mesh("pig", "pighead.obj");
+	Mesh *pig = new Mesh("test_pig", "../../assets/mesh/pighead.obj");
 	pig->load_obj(false);
-	pig->set_shader("test.vert", "test.frag");
+	pig->set_shader("../../shaders/normal.vert", "../../shaders/colour.frag");
 	pig->set_colour(glm::vec3(1.f, 0.f, 0.f));
 	pig->translate(glm::vec3(0.f, 0.f, 0.5f));
 	pig->scale(glm::vec3(1.f));

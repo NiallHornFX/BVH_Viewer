@@ -64,9 +64,9 @@ public:
 	void query_anim_reset();
 	void query_anim_prev();
 	void query_anim_next();
+	void query_anim_write();
 
 	// Debug
-	void test_prim(); 
 	void test_mesh();
 
 private:
