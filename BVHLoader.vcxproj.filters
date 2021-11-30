@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\dearimgui">
+      <UniqueIdentifier>{35daad05-38b4-47e6-9fe3-9ee4336e39f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\mesh.cpp">
@@ -47,6 +50,27 @@
     </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\dearimgui\imgui_demo.cpp">
+      <Filter>Source Files\dearimgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\dearimgui\imgui_draw.cpp">
+      <Filter>Source Files\dearimgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\dearimgui\imgui_tables.cpp">
+      <Filter>Source Files\dearimgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\dearimgui\imgui_widgets.cpp">
+      <Filter>Source Files\dearimgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\dearimgui\imgui.cpp">
+      <Filter>Source Files\dearimgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\dearimgui\imgui_impl_opengl3.cpp">
+      <Filter>Source Files\dearimgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\dearimgui\imgui_impl_glfw.cpp">
+      <Filter>Source Files\dearimgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

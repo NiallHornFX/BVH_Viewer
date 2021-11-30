@@ -56,7 +56,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\incl</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\incl;$(SolutionDir)\incl\ext\dearimgui</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -72,7 +72,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\incl</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\incl;$(SolutionDir)\incl\ext\dearimgui</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -87,6 +87,13 @@
     <ClCompile Include="src\bvhdata.cpp" />
     <ClCompile Include="src\camera.cpp" />
     <ClCompile Include="src\ext.cpp" />
+    <ClCompile Include="src\ext\dearimgui\imgui.cpp" />
+    <ClCompile Include="src\ext\dearimgui\imgui_demo.cpp" />
+    <ClCompile Include="src\ext\dearimgui\imgui_draw.cpp" />
+    <ClCompile Include="src\ext\dearimgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="src\ext\dearimgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="src\ext\dearimgui\imgui_tables.cpp" />
+    <ClCompile Include="src\ext\dearimgui\imgui_widgets.cpp" />
     <ClCompile Include="src\ground.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mesh.cpp" />
