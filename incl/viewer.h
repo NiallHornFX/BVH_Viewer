@@ -44,10 +44,9 @@ public:
 	void render();
 
 	// GUI
-	//
-	void test_gui_setup();
-	void test_gui_render();
-	void test_gui_shutdown();
+	void gui_setup();
+	void gui_render();
+	void gui_shutdown();
 
 	// Application 
 	void exec(); // Exec Viewer Application 

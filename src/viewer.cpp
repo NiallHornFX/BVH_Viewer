@@ -99,7 +99,7 @@ void Viewer::exec()
 	} 
 
 	// ============= Shutdown GUI =============
-	test_gui_shutdown();
+	gui_shutdown();
 }
 
 
@@ -168,7 +168,7 @@ void Viewer::window_context()
 
 
 	// ============= Setup GUI =============
-	test_gui_setup();
+	gui_setup();
 }
 
 // Load OpenGL Functions via GLEW and output device info.
@@ -242,9 +242,6 @@ void Viewer::render()
 	glClearColor(0.15f, 0.15f, 0.15f, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// ==================== GUI TEST ====================
-	test_gui_render();
-
 	// ==================== Render Viewer Primtivies ====================
 	get_GLError();
 	// Draw Grid 
@@ -279,6 +276,9 @@ void Viewer::render()
 
 	// Render Anim
 	anim.render(camera.get_ViewMatrix(), camera.get_PerspMatrix());
+
+	// ==================== Render GUI ====================
+	gui_render();
 
 	// ====================  Swap and Poll ====================
 	get_GLError();
@@ -395,9 +395,9 @@ void Viewer::test_mesh()
 	prims.push_back(pig);
 }
 
-// Test Implement dearimgui within Viewer Application 
+// =========================================== DearImGUI Implementation ===========================================
 
-void Viewer::test_gui_setup()
+void Viewer::gui_setup()
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -411,9 +411,10 @@ void Viewer::test_gui_setup()
 }
 
 
-void Viewer::test_gui_render()
+void Viewer::gui_render()
 {
 	get_GLError();
+	bool window = true; 
 
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
@@ -421,20 +422,25 @@ void Viewer::test_gui_render()
 
 	// Imgui layout 
 	{
-		ImGui::Begin("Demo window");
-		if (ImGui::Button("Hello!")) std::cout << "Hello\n";
+		//ImGui::ShowDemoWindow(&window);
+
+		ImGui::Begin("Animation Controls");
+		if (ImGui::Button("Play/Pause"))
+		{
+			anim.anim_loop = !anim.anim_loop;
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		}
 		ImGui::End();
 	}
 
-	// GUI Render
+	// Imgui Render
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 	get_GLError();
-	
 }
 
-void Viewer::test_gui_shutdown()
+void Viewer::gui_shutdown()
 {
 	// Cleanup
 	ImGui_ImplOpenGL3_Shutdown();
