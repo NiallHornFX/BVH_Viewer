@@ -167,7 +167,7 @@ void Viewer::window_context()
 	glViewport(0, 0, width, height);
 
 
-	// ======== dearimgui setup ============
+	// ============= Setup GUI =============
 	test_gui_setup();
 }
 
@@ -324,7 +324,7 @@ void Viewer::get_dt()
 	dt = cur_t - prev_t; 
 }
 
-// These will be replaced by GUI Calls later, for now use keyboard inputs.
+// These will be replaced by Immediate Mode GUI Calls later, for now use keyboard inputs.
 
 bool Viewer::esc_pressed()
 {
