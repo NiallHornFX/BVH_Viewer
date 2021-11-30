@@ -78,7 +78,7 @@ Viewer::~Viewer()
 // Initalizes viewer state and calls indefinite application execution loop.
 void Viewer::exec()
 {
-	// ==== Init Operations ====
+	// ============= Init Operations =============
 	render_prep();
 
 	// Create Test Primtiive
@@ -87,10 +87,7 @@ void Viewer::exec()
 	// BVH Write Test
 	//anim.write_bvh("output.bvh");
 
-	// Init GUI
-	//test_gui_setup();
-
-	// ==== Application Loop ====
+	// ============= Application Loop =============
 	bool esc = false; 
 	while (!glfwWindowShouldClose(window) && !esc)
 	{
@@ -101,8 +98,8 @@ void Viewer::exec()
 		esc = esc_pressed();
 	} 
 
-	// Shutdown GUI
-	//test_gui_shutdown();
+	// ============= Shutdown GUI =============
+	test_gui_shutdown();
 }
 
 
@@ -124,9 +121,6 @@ void Viewer::tick()
 	query_anim_prev();
 	query_anim_next();
 	query_anim_write();
-
-	// GUI
-	//test_gui_render();
 
 	// ============= Render =============
 	render();
@@ -173,16 +167,8 @@ void Viewer::window_context()
 	glViewport(0, 0, width, height);
 
 
-	// dearimgui setup
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-	ImGui::StyleColorsDark();
-	// Setup Platform/Renderer backends
-	ImGui_ImplGlfw_InitForOpenGL(window, true);
-	ImGui_ImplOpenGL3_Init("#version 430");
+	// ======== dearimgui setup ============
+	test_gui_setup();
 }
 
 // Load OpenGL Functions via GLEW and output device info.
@@ -193,7 +179,7 @@ void Viewer::extensions_load()
 	glewInit();
 	if (glewInit() != GLEW_OK)
 	{
-		std::cerr << "Error::Viewer:: GLFW failed to initalize.\n";
+		std::cerr << "ERROR::Viewer:: GLFW failed to initalize.\n";
 		std::terminate();
 	}
 
@@ -256,19 +242,8 @@ void Viewer::render()
 	glClearColor(0.15f, 0.15f, 0.15f, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// GUI TEST
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplGlfw_NewFrame();
-	ImGui::NewFrame();
-
-	ImGui::Begin("Demo window");
-	ImGui::Button("Hello!");
-	ImGui::End();
-
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-
+	// ==================== GUI TEST ====================
+	test_gui_render();
 
 	// ==================== Render Viewer Primtivies ====================
 	get_GLError();
@@ -424,92 +399,39 @@ void Viewer::test_mesh()
 
 void Viewer::test_gui_setup()
 {
-	/*
-	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-
-	// Setup Dear ImGui style
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 	ImGui::StyleColorsDark();
-	//ImGui::StyleColorsClassic();
-
-	const char* glsl_version = "#version 130";
-
 	// Setup Platform/Renderer backends
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
-	ImGui_ImplOpenGL3_Init(glsl_version);
-	
-	get_GLError();
-	*/
+	ImGui_ImplOpenGL3_Init("#version 430");
 }
 
 
 void Viewer::test_gui_render()
 {
-	//IMGUI_CHECKVERSION();
-	//ImGui::CreateContext();
-	//ImGuiIO& io = ImGui::GetIO(); (void)io;
-	
-	/*
 	get_GLError();
-	bool show_demo_window = true;
 
-	// Setup Dear ImGui style
-	ImGui::StyleColorsDark();
-	//ImGui::StyleColorsClassic();
-
-	const char* glsl_version = "#version 130";
-	// Setup Platform/Renderer backends
-	ImGui_ImplGlfw_InitForOpenGL(window, true);
-	ImGui_ImplOpenGL3_Init(glsl_version);
-
-
-	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
-	glfwPollEvents();
-
-	// Start the Dear ImGui frame
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
-	
-	if (show_demo_window)
-		ImGui::ShowDemoWindow(&show_demo_window);
 
+	// Imgui layout 
 	{
-		static float f = 0.0f;
-		static int counter = 0;
-
-		ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-		ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-		ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-
-		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-		ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-		if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-			counter++;
-		ImGui::SameLine();
-		ImGui::Text("counter = %d", counter);
-
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::Begin("Demo window");
+		if (ImGui::Button("Hello!")) std::cout << "Hello\n";
 		ImGui::End();
 	}
 
-	// Rendering
+	// GUI Render
 	ImGui::Render();
-
-	int display_w, display_h;
-	glfwGetFramebufferSize(window, &display_w, &display_h);
-	glViewport(0, 0, display_w, display_h);
-	glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-	glClear(GL_COLOR_BUFFER_BIT);
-
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
 	get_GLError();
-	*/
+	
 }
 
 void Viewer::test_gui_shutdown()
