@@ -11,6 +11,7 @@
 #include "ext/glm/gtc/type_ptr.hpp"
 
 // dearimgui
+// Make sure include path is directly added so files can internally include without using /ext/dearimgui path. 
 #include "ext/dearimgui/imgui.h"
 #include "ext/dearimgui/imgui_impl_glfw.h"
 #include "ext/dearimgui/imgui_impl_opengl3.h"
@@ -19,6 +20,9 @@
 #include <iostream>
 #include <vector>
 #include <thread>
+
+#define USE_FREE_CAMERA 1
+
 
 // Global GLFW State
 struct
@@ -37,7 +41,7 @@ struct
 Viewer::Viewer(std::size_t W, std::size_t H, const char *Title)
 	: width(W), height(H), title(Title)
 {
-	// ==== Init ====
+	// ============= Init =============
 	tick_c = 0;
 	last_yawoffs = 0.f;
 	last_pitchoffs = 0.f;
@@ -45,15 +49,14 @@ Viewer::Viewer(std::size_t W, std::size_t H, const char *Title)
 	draw_grid = true;
 	draw_axis = true;
 
-	// ==== OpenGL Setup ==== 
+	// ============= OpenGL Setup ============= 
 	// Setup OpenGL Context and Window
 	window_context(); 
 	// Load OpenGL Extensions
 	extensions_load();
 
-	// ==== Anim State ====
+	// ============= Anim State =============
 	// Init with some BVH File (can be changed later via GUI)
-
 	// Test
 	//anim.set_bvhFile("../../assets/bvh/arm.bvh");
 
@@ -63,10 +66,12 @@ Viewer::Viewer(std::size_t W, std::size_t H, const char *Title)
 	// Dance
 	//anim.set_bvhFile("../../assets/bvh/05_06.bvh");
 
-
-	// ==== Create Camera ====
+	// ============= Camera =============
+	#if USE_FREE_CAMERA == 0
 	//camera = Camera(glm::vec3(0.f, 0.25f, 1.f), 1.f, 80.f, width / height, false); // Fixed
-	camera = Camera(glm::vec3(0.f, 0.25f, 1.f), 1.f, 80.f, width / height, true); // Free
+	#else
+	camera = Camera(glm::vec3(3.f, 1.f, -1.f), 1.f, 80.f, width / height, true);    // Free
+	#endif
 }
 
 Viewer::~Viewer() 
@@ -81,6 +86,7 @@ void Viewer::exec()
 	// ============= Init Operations =============
 	render_prep();
 
+	// ============= Test Operations =============
 	// Create Test Primtiive
 	//test_mesh();
 
@@ -113,14 +119,14 @@ void Viewer::tick()
 
 	// ============= Input Query =============
 	// Draw Query 
-	query_drawState();
+	//query_drawState();
 
 	// Anim Input Query (Set anim state)
-	query_anim_pause();
-	query_anim_reset();
-	query_anim_prev();
-	query_anim_next();
-	query_anim_write();
+	//query_anim_pause();
+	//query_anim_reset();
+	//query_anim_prev();
+	//query_anim_next();
+	//query_anim_write();
 
 	// ============= Render =============
 	render();
@@ -132,7 +138,7 @@ void Viewer::tick()
 // Create Window via GLFW and Initalize OpenGL Context on current thread. 
 void Viewer::window_context()
 {
-	// GLFW Setup -
+	// ============= GLFW Setup =============
 	glfwInit();
 	if (!glfwInit())
 	{
@@ -145,7 +151,6 @@ void Viewer::window_context()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	//glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); // Fixed Window Size. 
 	glfwWindowHint(GLFW_SAMPLES, 16); // MSAA.
-
 	// Create Window
 	window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
 	if (window == NULL)
@@ -155,17 +160,16 @@ void Viewer::window_context()
 		std::terminate();
 	}
 
-	// Set GLFW Callbacks 
+	// ============= Set GLFW Callbacks =============
 	// Window Callack
 	glfwSetFramebufferSizeCallback(window, &framebuffer_size_callback);
 	// Mouse Callbacks
 	glfwSetCursorPosCallback(window, &mouse_callback);
 	glfwSetScrollCallback(window, &scroll_callback);
 
-	// Set Context and Viewport 
+	// ============= Set Context and Viewport =============
 	glfwMakeContextCurrent(window);
 	glViewport(0, 0, width, height);
-
 
 	// ============= Setup GUI =============
 	gui_setup();
@@ -196,8 +200,7 @@ void Viewer::extensions_load()
 // Initalize Render State
 void Viewer::render_prep()
 {
-	// ======== OpenGL Pre Render State ========
-
+	// ============= OpenGL Pre Render State =============
 	// Multisampling 
 	glEnable(GL_MULTISAMPLE);
 
@@ -210,8 +213,7 @@ void Viewer::render_prep()
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	// ======== Create Viewer Primtivies ========
-
+	// ============= Create Viewer Primtivies =============
 	// Ground Plane
 	ground = new Ground;
 	ground->set_size(4.f);
@@ -403,7 +405,6 @@ void Viewer::gui_setup()
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 	ImGui::StyleColorsDark();
 	// Setup Platform/Renderer backends
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
@@ -420,20 +421,81 @@ void Viewer::gui_render()
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 
-	// Imgui layout 
-	{
-		//ImGui::ShowDemoWindow(&window);
+	//ImGui::SetWindowSize(ImVec2(100, 200));
 
+	// Should be member vars.
+	static char bvh_input_path[100]{ "../../ assets/bvh/02_01.bvh" };
+	static char bvh_output_path[100];
+
+	// ============= Imgui layout =============
+	{
 		ImGui::Begin("Animation Controls");
+
+		// Text
+		ImGui::Text("Animation Frame = %d", anim.anim_frame);
+
+		// BVH Input
+		ImGui::InputText("BVH File Path", bvh_input_path, 100);
+
+		// Load BVH
+		if (ImGui::Button("Load BVH"))
+		{
+			anim.set_bvhFile(bvh_input_path);
+		}
+		// Anim Loop Play Pause
 		if (ImGui::Button("Play/Pause"))
 		{
 			anim.anim_loop = !anim.anim_loop;
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
+		// Reset
+		if (ImGui::Button("Reset"))
+		{
+			anim.anim_frame = 0;
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		}
+		// Prev Frame
+		if (ImGui::Button("Prev Frame"))
+		{
+			anim.dec_frame();
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		}
+		// Next Frame
+		if (ImGui::Button("Next Frame"))
+		{
+			anim.inc_frame();
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		}
+		// Write BVH 
+		// BVH Output
+		ImGui::InputText("Output Path", bvh_output_path, 100);
+		if (ImGui::Button("Export BVH"))
+		{
+			if (strlen(bvh_output_path))
+			{
+				std::cout << "INFO::BVH Export Initiated to " << bvh_output_path << ".\n";
+				anim.write_bvh(bvh_output_path);
+				std::cout << "INFO::BVH Export Scuessful!\n";
+				std::this_thread::sleep_for(std::chrono::milliseconds(100));
+			}
+		}
+		// Draw Axis
+		if (ImGui::Button("Draw Origin Axis"))
+		{
+			draw_axis = !draw_axis; 
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		}
+		// Draw Grid
+		if (ImGui::Button("Draw Grid"))
+		{
+			draw_grid = !draw_grid;
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		}
+
 		ImGui::End();
 	}
 
-	// Imgui Render
+	// ============= Imgui Render =============
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 

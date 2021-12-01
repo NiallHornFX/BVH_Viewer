@@ -1,15 +1,15 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(377,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
   viewer.cpp
-d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(69): warning C4244: 'argument': conversion from 'size_t' to 'float', possible loss of data
-d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(150): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(167): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(323): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(460): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(461): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(462): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(464): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(465): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(466): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(474): warning C4244: 'initializing': conversion from 'size_t' to 'float', possible loss of data
-d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(332): warning C4715: 'Viewer::esc_pressed': not all control paths return a value
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(73): warning C4244: 'argument': conversion from 'size_t' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(155): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(172): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(325): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(522): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(523): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(524): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(526): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(527): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(528): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(536): warning C4244: 'initializing': conversion from 'size_t' to 'float', possible loss of data
+d:\dev\projects\uni_local\bvh_loader\src\viewer.cpp(334): warning C4715: 'Viewer::esc_pressed': not all control paths return a value
   BVHLoader.vcxproj -> D:\DEV\Projects\Uni_Local\BVH_Loader\\build\bin\BVHLoader.exe
