@@ -309,7 +309,8 @@ void Viewer::update_window()
 
 	// Update Window Title 
 	std::string title_u;
-	title_u = title + "      FPS : " + std::to_string(1.f / dt);
+	title_u = title + "  FPS : " + std::to_string(1.f / dt) + "      OpenGL " 
+		+ std::to_string(GL_MAJOR) + "." + std::to_string(GL_MINOR);
 	glfwSetWindowTitle(window, title_u.c_str());
 }
 
