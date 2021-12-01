@@ -1,5 +1,6 @@
 # Dirs
 build/intermediate
+ext/
 .vs
 
 # File types
