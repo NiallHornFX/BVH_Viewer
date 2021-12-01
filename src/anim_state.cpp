@@ -38,6 +38,10 @@ void Anim_State::set_bvhFile(const char *BVHPath)
 
 	max_frame = bvh->num_frame;
 	interval  = bvh->interval;
+
+	// Reset Anim state
+	anim_frame = 0;
+	anim_loop = true; 
 }
 
 void Anim_State::build_skel()

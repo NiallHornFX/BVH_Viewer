@@ -122,7 +122,7 @@ void Viewer::tick()
 	//query_drawState();
 
 	// Anim Input Query (Set anim state)
-	//query_anim_pause();
+	query_anim_pause();
 	//query_anim_reset();
 	//query_anim_prev();
 	//query_anim_next();
@@ -309,8 +309,9 @@ void Viewer::update_window()
 
 	// Update Window Title 
 	std::string title_u;
-	title_u = title + "  FPS : " + std::to_string(1.f / dt) + "      OpenGL " 
-		+ std::to_string(GL_MAJOR) + "." + std::to_string(GL_MINOR);
+	title_u = title + "      OpenGL " + std::to_string(GL_MAJOR) + "." + std::to_string(GL_MINOR)
+		+ "       FPS : " + std::to_string(1.f / dt);
+	
 	glfwSetWindowTitle(window, title_u.c_str());
 }
 
@@ -425,7 +426,7 @@ void Viewer::gui_render()
 	//ImGui::SetWindowSize(ImVec2(100, 200));
 
 	// Should be member vars.
-	static char bvh_input_path[100]{ "../../ assets/bvh/02_01.bvh" };
+	static char bvh_input_path[100]{ "../../assets/bvh/02_01.bvh" };
 	static char bvh_output_path[100];
 
 	// ============= Imgui layout =============
